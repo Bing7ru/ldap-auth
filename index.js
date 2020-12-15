@@ -2,17 +2,23 @@ const LdapStrategy = require("passport-ldapauth");
 const User = require("@saltcorn/data/models/user");
 const Workflow = require("@saltcorn/data/models/workflow");
 const Form = require("@saltcorn/data/models/form");
+const db = require("@saltcorn/data/db");
 
 const { getState } = require("@saltcorn/data/db/state");
 
 const authentication = (config) => {
   return {
-    twitter: {
+    ldap: {
       label: "LDAP",
       postUsernamePassword: true,
       strategy: new LdapStrategy(
-        { server: config },
+        {
+          server: config,
+          usernameField: "email",
+          passwordField: "password",
+        },
         function (token, tokenSecret, profile, cb) {
+          db.sql_log("AUTH LDAP", token, tokenSecret, profile, cb);
           console.log(token, tokenSecret, profile, cb);
           /*User.findOrCreateByAttribute("twitterId", profile.id, {
             email: "",
@@ -58,6 +64,7 @@ const configuration_workflow = () => {
                 name: "searchFilter",
                 label: "Search Filter",
                 type: "String",
+                required: true,
               },
             ],
           }),
