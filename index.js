@@ -32,7 +32,6 @@ const configuration_workflow = () => {
         form: () =>
           new Form({
             labelCols: 3,
-            blurb,
             fields: [
               {
                 name: "url",
