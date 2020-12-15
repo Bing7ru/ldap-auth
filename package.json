@@ -1,0 +1,12 @@
+{
+  "name": "@saltcorn/ldap-auth",
+  "version": "0.1.2",
+  "description": "Authentication with LDAP",
+  "main": "index.js",
+  "dependencies": {
+    "@saltcorn/data": "^0.3.0",
+    "passport-ldapauth": "^3.0.1"
+  },
+  "author": "Tom Nielsen",
+  "license": "MIT"
+}
