@@ -11,20 +11,19 @@ const authentication = (config) => {
     ldap: {
       label: "LDAP",
       postUsernamePassword: true,
+      usernameLabel: "UID",
       strategy: new LdapStrategy(
         {
           server: config,
           usernameField: "email",
           passwordField: "password",
         },
-        function (token, tokenSecret, profile, cb) {
-          db.sql_log("AUTH LDAP", token, tokenSecret, profile, cb);
-          console.log(token, tokenSecret, profile, cb);
-          /*User.findOrCreateByAttribute("twitterId", profile.id, {
-            email: "",
+        function (user, cb) {
+          User.findOrCreateByAttribute("ldap-dn", user.dn, {
+            email: user.mail || "",
           }).then((u) => {
             return cb(null, u.session_object);
-          });*/
+          });
         }
       ),
     },
