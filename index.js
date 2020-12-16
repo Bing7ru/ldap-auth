@@ -52,7 +52,7 @@ const configuration_workflow = () => {
               {
                 name: "bindCredentials",
                 label: "Bind Credentials",
-                type: "String",
+                input_type: "password",
               },
               {
                 name: "searchBase",
