@@ -19,7 +19,7 @@ const authentication = (config) => {
           passwordField: "password",
         },
         function (user, cb) {
-          User.findOrCreateByAttribute("ldap-dn", user.dn, {
+          User.findOrCreateByAttribute("ldapdn", user.dn, {
             email: user.mail || "",
           }).then((u) => {
             return cb(null, u.session_object);
