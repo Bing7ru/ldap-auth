@@ -10,6 +10,7 @@ const authentication = (config) => {
   return {
     ldap: {
       label: "LDAP",
+      setsUserAttribute: "ldapdn",
       postUsernamePassword: true,
       usernameLabel: "UID",
       strategy: new LdapStrategy(
