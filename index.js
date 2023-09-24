@@ -3,10 +3,22 @@ const User = require("@saltcorn/data/models/user");
 const Workflow = require("@saltcorn/data/models/workflow");
 const Form = require("@saltcorn/data/models/form");
 const db = require("@saltcorn/data/db");
+const bunyan = require("bunyan");
 
 const { getState } = require("@saltcorn/data/db/state");
 
 const authentication = (config) => {
+  const scLogLevel = getState().logLevel;
+  const bLogLevel =
+    scLogLevel === 5
+      ? bunyan.TRACE
+      : scLogLevel === 4
+      ? bunyan.DEBUG
+      : bunyan.ERROR;
+  var logger = bunyan.createLogger({
+    name: "saltcorn-ldap",
+    level: bLogLevel,
+  });
   return {
     ldap: {
       label: "LDAP",
@@ -15,7 +27,7 @@ const authentication = (config) => {
       usernameLabel: "UID",
       strategy: new LdapStrategy(
         {
-          server: config,
+          server: { ...config, log: logger },
           usernameField: "email",
           passwordField: "password",
         },
