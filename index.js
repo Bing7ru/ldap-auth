@@ -33,7 +33,7 @@ const authentication = (config) => {
         },
         function (user, cb) {
           User.findOrCreateByAttribute("ldapdn", user.dn, {
-            email: user.mail || "",
+            email: user.description || "",
           }).then((u) => {
             return cb(null, u.session_object);
           });
