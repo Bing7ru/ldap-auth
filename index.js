@@ -33,8 +33,8 @@ const authentication = (config) => {
         },
         function (user, cb) {
           User.findOrCreateByAttribute("ldapdn", user.dn, {
-            email: user.mail || "",
-            fio: user.description || ""
+            email: user.description || "",
+            fio: user.displayName || ""
           }).then((u) => {
             return cb(null, u.session_object);
           });
